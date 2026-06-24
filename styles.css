@@ -1,15 +1,188 @@
-/* Charity: water Brand Colors
+/* Core Brand Colors */
+:root {
+    --cw-yellow: #FFC907;
+    --cw-blue: #2E9DF7;
+    --cw-light-blue: #8BD1CB;
+    --cw-dark-grey: #333333;
+    --cw-light-grey: #F5F5F5;
+}
 
-Primary Colors:
-- Yellow:     #FFC907
-- Blue:       #2E9DF7
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cw-light-grey);
+    color: var(--cw-dark-grey);
+}
 
-Secondary Colors:
-- Light Blue: #8BD1CB
-- Green:      #4FCB53
-- Orange:     #FF902A
-- Red:        #F5402C
-- Dark Green: #159A48
-- Pink:       #F16061
+/* Header Styling */
+header {
+    background-color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--cw-yellow);
+}
 
-*/
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 40px;
+}
+
+.stats-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#reset-btn {
+    background-color: #F5402C; /* Brand Red */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#reset-btn:hover {
+    background-color: #D32F2F;
+}
+
+/* Layout */
+.game-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 20px auto;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.click-zone, .upgrade-menu {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Click Zone */
+.click-zone {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clicker-container {
+    margin: 30px 0;
+}
+
+#main-clicker {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+    background-color: var(--cw-yellow);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* Punchy CSS animation for clicking */
+#main-clicker:active {
+    transform: scale(0.9);
+}
+
+.current-stats {
+    background-color: var(--cw-light-grey);
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+/* Upgrades Menu */
+.upgrade-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.upgrade-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--cw-light-grey);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid var(--cw-blue);
+}
+
+.special-upgrade {
+    border-left: 5px solid var(--cw-yellow);
+    background-color: #FFF9E6;
+}
+
+.upgrade-info h3 {
+    margin: 0 0 5px 0;
+}
+
+.upgrade-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.buy-btn {
+    background-color: var(--cw-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.buy-btn:hover {
+    background-color: #1A82D4;
+}
+
+.buy-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none;
+}
+
+#win-message {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #4FCB53; /* Brand Green */
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+    }
+}

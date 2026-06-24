@@ -3,11 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charity Water Game</title>
+    <title>Clear Source | charity: water Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to the Charity Water Game Prototype</h1>
-    <script src="script.js"></script>
+<header>
+    <div class="logo-container">
+        <img src="img/cw_logo_horizontal.png" alt="charity: water logo" class="logo">
+        <h1>CLEAR SOURCE</h1>
+    </div>
+    <div class="stats-header">
+        <p>Total Drops: <span id="total-water">0</span></p>
+        <button id="reset-btn">Reset Game</button>
+    </div>
+</header>
+
+<main class="game-container">
+    <section class="click-zone">
+        <h2>COLLECT WATER!</h2>
+
+        <div class="clicker-container">
+            <img src="img/water-can-transparent.png" id="main-clicker" alt="Click to collect water">
+        </div>
+
+        <div class="current-stats">
+            <p>Drops per Click: <span id="drops-per-click">1</span></p>
+            <p>Passive Income: <span id="passive-income">0</span> / sec</p>
+        </div>
+
+        <div id="win-message" class="hidden">
+            🎉 Congratulations! You unlocked the Drilled Well and brought clean water to a community! 🎉
+        </div>
+    </section>
+
+    <section class="upgrade-menu">
+        <h2>Upgrades</h2>
+
+        <div class="upgrade-card">
+            <div class="upgrade-info">
+                <h3>BioSand Filter</h3>
+                <p>+10 Drops per Click</p>
+                <p>Cost: <span id="cost-biosand">50</span> Drops</p>
+            </div>
+            <button class="buy-btn" id="buy-biosand">BUY</button>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-info">
+                <h3>Hand Pump</h3>
+                <p>+50 Drops per Click</p>
+                <p>Cost: <span id="cost-handpump">200</span> Drops</p>
+            </div>
+            <button class="buy-btn" id="buy-handpump">BUY</button>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-info">
+                <h3>Rainwater Harvester</h3>
+                <p>+5 Drops / sec (Passive)</p>
+                <p>Cost: <span id="cost-rainwater">500</span> Drops</p>
+            </div>
+            <button class="buy-btn" id="buy-rainwater">BUY</button>
+        </div>
+
+        <div class="upgrade-card">
+            <div class="upgrade-info">
+                <h3>Solar Water System</h3>
+                <p>+20 Drops / sec (Passive)</p>
+                <p>Cost: <span id="cost-solar">1500</span> Drops</p>
+            </div>
+            <button class="buy-btn" id="buy-solar">BUY</button>
+        </div>
+
+        <div class="upgrade-card special-upgrade">
+            <div class="upgrade-info">
+                <h3>Drilled Well (Goal)</h3>
+                <p>Ultimate Milestone</p>
+                <p>Cost: <span id="cost-well">5000</span> Drops</p>
+            </div>
+            <button class="buy-btn" id="buy-well">BUY</button>
+        </div>
+    </section>
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
