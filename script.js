@@ -11,7 +11,11 @@ let costBiosand = 50;
 let costHandpump = 200;
 let costRainwater = 500;
 let costSolar = 1500;
+let baseCostWell = 5000;
 let costWell = 5000;
+
+// --- Game Settings ---
+let difficultyMultiplier = 1;
 
 // --- DOM Elements ---
 const totalWaterEl = document.getElementById('total-water');
@@ -20,6 +24,8 @@ const passiveIncomeEl = document.getElementById('passive-income');
 const mainClicker = document.getElementById('main-clicker');
 const winMessage = document.getElementById('win-message');
 const leakObstacle = document.getElementById('leak-obstacle');
+const difficultySelect = document.getElementById('difficulty');
+const milestoneMessage = document.getElementById('milestone-message');
 
 // Buttons
 const btnBiosand = document.getElementById('buy-biosand');
@@ -27,6 +33,16 @@ const btnHandpump = document.getElementById('buy-handpump');
 const btnRainwater = document.getElementById('buy-rainwater');
 const btnSolar = document.getElementById('buy-solar');
 const btnWell = document.getElementById('buy-well');
+
+// --- Audio & Milestones (LevelUps) ---
+const clickSound = new Audio('click.mp3');
+const winSound = new Audio('win.mp3');
+
+const milestones = [
+    { score: 100, message: "100 Drops! You're making a splash!", reached: false },
+    { score: 500, message: "500 Drops! Keep the water flowing!", reached: false },
+    { score: 1000, message: "1000 Drops! A community is feeling the impact!", reached: false }
+];
 
 // --- Helper Functions ---
 
@@ -51,15 +67,48 @@ function updateUI() {
     btnWell.disabled = totalDrops < costWell;
 }
 
+// Check for milestone unlocks
+function checkMilestones() {
+    milestones.forEach(m => {
+        if (totalDrops >= m.score && !m.reached) {
+            m.reached = true;
+            milestoneMessage.innerText = m.message;
+            milestoneMessage.classList.remove('hidden');
+
+            // Hide the message after 3.5 seconds
+            setTimeout(() => {
+                milestoneMessage.classList.add('hidden');
+            }, 3500);
+        }
+    });
+}
+
 // --- Event Listeners ---
 
-// 1. Manual Clicking
-mainClicker.addEventListener('click', function() {
-    totalDrops = totalDrops + dropsPerClick;
+// 1. Difficulty Change Logic
+difficultySelect.addEventListener('change', (e) => {
+    if (e.target.value === 'easy') difficultyMultiplier = 0.5;
+    else if (e.target.value === 'normal') difficultyMultiplier = 1;
+    else if (e.target.value === 'hard') difficultyMultiplier = 2;
+
+    // Scale the ultimate goal cost based on difficulty
+    costWell = baseCostWell * difficultyMultiplier;
     updateUI();
 });
 
-// 2. Buying Upgrades
+// 2. Manual Clicking
+mainClicker.addEventListener('click', function() {
+    totalDrops = totalDrops + dropsPerClick;
+
+    // Play sound and catch errors if browser blocks audio before interaction
+    clickSound.currentTime = 0; // Reset sound to start to allow rapid clicking
+    clickSound.play().catch(e => console.log("Audio play prevented: ", e));
+
+    checkMilestones();
+    updateUI();
+});
+
+// 3. Buying Upgrades
 btnBiosand.addEventListener('click', function() {
     if (totalDrops >= costBiosand) {
         totalDrops = totalDrops - costBiosand;
@@ -99,20 +148,23 @@ btnSolar.addEventListener('click', function() {
 btnWell.addEventListener('click', function() {
     if (totalDrops >= costWell) {
         totalDrops = totalDrops - costWell;
+
+        winSound.play().catch(e => console.log("Audio play prevented: ", e));
         winMessage.classList.remove('hidden'); // Show win message
+
         btnWell.disabled = true;
         btnWell.innerText = "UNLOCKED";
         updateUI();
     }
 });
 
-// 3. Obstacle Logic (Fix the Leak!)
+// 4. Obstacle Logic (Fix the Leak!)
 leakObstacle.addEventListener('click', function() {
     isLeakActive = false;
     leakObstacle.classList.add('hidden'); // Hide the leak warning
 });
 
-// 4. Reset Game
+// 5. Reset Game
 document.getElementById('reset-btn').addEventListener('click', function() {
     totalDrops = 0;
     dropsPerClick = 1;
@@ -122,11 +174,15 @@ document.getElementById('reset-btn').addEventListener('click', function() {
     costHandpump = 200;
     costRainwater = 500;
     costSolar = 1500;
-    costWell = 5000;
+    costWell = baseCostWell * difficultyMultiplier;
+
+    // Reset milestones
+    milestones.forEach(m => m.reached = false);
 
     isLeakActive = false;
     leakObstacle.classList.add('hidden');
     winMessage.classList.add('hidden');
+    milestoneMessage.classList.add('hidden');
     btnWell.innerText = "BUY";
     updateUI();
 });
@@ -137,6 +193,7 @@ document.getElementById('reset-btn').addEventListener('click', function() {
 setInterval(function() {
     if (passiveIncome > 0) {
         totalDrops = totalDrops + passiveIncome;
+        checkMilestones();
     }
 
     if (isLeakActive) {

@@ -8,8 +8,9 @@
     --cw-red: #F5402C; /* Brand Red for Obstacle */
 }
 
+/* Updated to use charity: water brand font */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--cw-light-grey);
@@ -42,6 +43,13 @@ header {
     gap: 20px;
     font-weight: bold;
     font-size: 1.2rem;
+}
+
+.difficulty-selector select {
+    font-family: 'Montserrat', Arial, sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 #reset-btn {
@@ -108,7 +116,7 @@ header {
     font-size: 1.1rem;
 }
 
-/* --- NEW OBSTACLE STYLING --- */
+/* --- OBSTACLE & MILESTONE STYLING --- */
 #leak-obstacle {
     margin-top: 15px;
     background-color: var(--cw-red);
@@ -124,6 +132,17 @@ header {
 @keyframes flashWarning {
     0% { transform: scale(1); background-color: var(--cw-red); }
     100% { transform: scale(1.05); background-color: #D32F2F; box-shadow: 0 0 15px rgba(245, 64, 44, 0.5); }
+}
+
+#milestone-message {
+    background-color: var(--cw-blue);
+    color: white;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    animation: popIn 0.5s ease-out;
+    width: 80%;
 }
 
 /* Upgrades Menu */
@@ -191,11 +210,31 @@ header {
     font-weight: bold;
     border-radius: 8px;
     animation: popIn 0.5s ease-out;
+    width: 80%;
 }
 
 @keyframes popIn {
     0% { transform: scale(0.5); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--cw-dark-grey);
+    color: white;
+    margin-top: 40px;
+}
+
+footer a {
+    color: var(--cw-light-blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
